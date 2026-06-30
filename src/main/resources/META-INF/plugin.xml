@@ -1,0 +1,71 @@
+<idea-plugin>
+    <id>top.arlong</id>
+    <name>Gold Price Radar</name>
+    <vendor email="support@stackstark.com" url="https://github.com/eacape">Corgi</vendor>
+
+    <description><![CDATA[
+    Real-time gold price display plugin for JetBrains IDEs. Supports both domestic gold price (AU9999) and international gold price (XAU), helping you track gold price trends and position profits anytime.
+    <br/><br/>
+    实时显示黄金价格，支持国内金价和国际金价，帮助你随时掌握金价动态和持仓收益。
+
+    <br/><br/>
+    <img src="https://eacape-1259159524.cos.ap-shanghai.myqcloud.com/mermaidscreenshot-20260126-192518.png" alt="Plugin Screenshot" width="700"/>
+    <br/>
+
+    <h2>Features / 功能特性</h2>
+    <ul>
+        <li>📊 Real-time gold price display in status bar / 状态栏实时显示金价（AU9999 国内金价、XAU 国际金价）</li>
+        <li>🔄 Auto-update every 15 minutes by default / 自动定时更新价格（默认 15 分钟）</li>
+        <li>🖱️ Click to manually refresh / 点击状态栏可手动刷新</li>
+        <li>🎨 Hover to view detailed information / 鼠标悬浮显示详细金价信息</li>
+        <li>🔌 Free API integration for real domestic gold price / 支持免费 API 接入真实国内金价数据</li>
+        <li>💎 Position profit calculation (total & daily) / 持仓收益计算（累计收益、今日收益）</li>
+        <li>⚙️ Configurable update interval and position info / 可配置更新间隔和持仓信息</li>
+    </ul>
+
+    <h2>Usage / 使用说明</h2>
+    <br/>
+    <img src="https://eacape-1259159524.cos.ap-shanghai.myqcloud.com/mermaidimage-20260126192745629.png" alt="Settings Interface" width="600"/>
+    <br/>
+    <ul>
+        <li>After installation, gold price will be displayed in the IDE status bar / 安装后，IDE 底部状态栏会自动显示金价</li>
+        <li>Go to Settings → Tools → Gold Price Radar to configure / 进入 Settings → Tools → 今日金价 进行配置</li>
+        <li>International gold price (XAU) is displayed by default, no configuration needed / 默认显示国际金价（XAU），无需配置即可使用</li>
+    </ul>
+
+    <h2>Configure Domestic Gold Price (Optional) / 配置国内金价（可选）</h2>
+    <p>To display real domestic gold price data, you need to configure a free API Key:</p>
+    <p>如需显示真实的国内金价数据，需要配置免费的 API Key：</p>
+    <ol>
+        <li>Visit <a href="https://www.juhe.cn/docs/api/id/29">Juhe Data - Gold Price API</a> / 访问聚合数据黄金价格API</li>
+        <li>Register and apply for "Gold Price" API (100 free calls per day) / 注册账号并申请"黄金价格"API（每天 100 次免费调用）</li>
+        <li>Copy your API Key / 复制你的 API Key</li>
+        <li>Select AU9999 as price type in plugin settings / 在插件设置中选择金价类型为 AU9999</li>
+        <li>Paste API Key and save / 粘贴 API Key 并保存</li>
+    </ol>
+
+    <h2>Configure Position Profit (Optional) / 配置持仓收益（可选）</h2>
+    <p>If you hold gold, you can configure position information to view profits in real-time:</p>
+    <p>如果你持有黄金，可以配置持仓信息来实时查看收益：</p>
+    <ul>
+        <li>Enter holding weight in grams (e.g., 100) / 输入持仓克重（例如：100）</li>
+        <li>Enter cost average price per gram (e.g., 520.50 CNY/g) / 输入成本均价（例如：520.50 元/克）</li>
+        <li>Hover to view total profit and daily profit / 鼠标悬停即可查看累计收益和今日收益</li>
+    </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable
+                parentId="tools"
+                instance="top.arlong.settings.GoldSettingsConfigurable"
+                id="top.arlong.settings.GoldSettingsConfigurable"
+                displayName="今日金价"/>
+        <applicationService
+                serviceImplementation="top.arlong.settings.GoldSettings"/>
+        <statusBarWidgetFactory
+                implementation="top.arlong.statusbar.GoldPriceWidgetFactory"
+                id="top.arlong.statusbar.GoldPriceWidgetFactory"/>
+    </extensions>
+</idea-plugin>
